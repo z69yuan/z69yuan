@@ -10,11 +10,11 @@
     <lastBuildDate>Sat, 10 Dec 2022 19:19:23 +0800</lastBuildDate><atom:link href="https://z69yuan.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>First</title>
-      <link>https://z69yuan.github.io/posts/hugo%E7%9B%B8%E5%85%B3%E9%93%BE%E6%8E%A5/</link>
+      <link>https://z69yuan.github.io/posts/hugo/</link>
       <pubDate>Sat, 10 Dec 2022 19:19:23 +0800</pubDate>
       
-      <guid>https://z69yuan.github.io/posts/hugo%E7%9B%B8%E5%85%B3%E9%93%BE%E6%8E%A5/</guid>
-      <description>重要链接 Hugo 搭建教程 Archie 主题 </description>
+      <guid>https://z69yuan.github.io/posts/hugo/</guid>
+      <description>一、Hugo命令 hugo server #测试命令 hugo -D # 在public 目录下 ， 生成可以发布的文件 二、重要链接 Hugo 搭建教程 Archie 主题 </description>
     </item>
     
     <item>
