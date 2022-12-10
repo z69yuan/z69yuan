@@ -9,12 +9,12 @@
     <copyright>© 69yuan</copyright>
     <lastBuildDate>Sat, 10 Dec 2022 19:19:23 +0800</lastBuildDate><atom:link href="https://z69yuan.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>First</title>
+      <title>Hugo备忘录</title>
       <link>https://z69yuan.github.io/posts/hugo/</link>
       <pubDate>Sat, 10 Dec 2022 19:19:23 +0800</pubDate>
       
       <guid>https://z69yuan.github.io/posts/hugo/</guid>
-      <description>一、Hugo命令 hugo server #测试命令 hugo -D # 在public 目录下 ， 生成可以发布的文件 二、重要链接 Hugo 搭建教程 Archie 主题 </description>
+      <description>一、Hugo命令 hugo new &amp;lt;相对于Content的路径&amp;gt; # 创建文件 hugo server #测试命令 hugo -D # 在public 目录下 ， 生成可以发布的文件 二、内容编写 三、重要链接 Hugo 搭建教程 Archie 主题 </description>
     </item>
     
     <item>
