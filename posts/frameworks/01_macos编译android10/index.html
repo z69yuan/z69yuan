@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content=""
+  />
+  
+    
+      <title>MacOs编译AndroidQ | 69yuan</title>
+    
+  
+  <link rel="stylesheet" href="/css/reset.css"/>
+  <link rel="stylesheet" href="/css/font.css"/>
+  <link rel="stylesheet" href="/css/smigle.css"/>
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+</head>
+
+  <body>
+    <header>
+  <div id="brand">
+    <a class="icon-link" href="https://z69yuan.github.io/">
+      <img
+        class="icon"
+        src="/images/brandIcon.svg"
+      />
+    </a>
+    <div class="text">
+      <a href="https://z69yuan.github.io/"><h1>69yuan</h1></a>
+      <h3>An Android Developer , Go Go Go !!!</h3>
+    </div>
+  </div>
+  <nav>
+    
+      
+        
+        <a href="/"><b>Home</b></a>
+      
+         | 
+        <a href="/posts"><b>All posts</b></a>
+      
+         | 
+        <a href="/categories"><b>Categories</b></a>
+      
+         | 
+        <a href="/tags"><b>Tags</b></a>
+      
+         | 
+        <a href="/about"><b>About</b></a>
+      
+    
+  </nav>
+  <hr />
+</header>
+
+    <div id="content">
+      
+  <main>
+    <article>
+      <h1>MacOs编译AndroidQ</h1>
+      <div class="post-meta">
+  <strong>
+    <span>Posted on</span>
+    <time>2022-05-26 07:36:38</time>
+    <span>in</span>
+    
+      <a href="/categories/framework">Framework</a>
+  </strong>
+  <span> • 281 words</span>
+  <span> • 2 minute read</span>
+  
+  
+    <div>
+      <span>Tags:</span>
+      
+        <a href="/tags/framwork">Framwork</a>, 
+        <a href="/tags/aosp">AOSP</a>
+    </div>
+  
+</div>
+
+      <div><h3 id="一准备工作">一、准备工作</h3>
+<h4 id="11-系统介绍">1.1 系统介绍</h4>
+<p><strong>Mac系统版本：</strong> 12.3.1</p>
+<p><strong>内存：</strong> 16GB</p>
+<p>**CPU: ** 4核i5 2GHz</p>
+<p><strong>磁盘</strong>：<strong>180GB</strong></p>
+<blockquote>
+<p>笔者曾在 Ubuntu中编译该版本，最后占用磁盘空间为154GB。具体请查看 <a href="https://blog.csdn.net/dirksmaller/article/details/112761115?spm=1001.2014.3001.5501">Ubuntu16.04编译Android10源码并刷机Pixel</a></p>
+</blockquote>
+<h4 id="12-aosp版本选择">1.2 AOSP版本选择</h4>
+<ol>
+<li><a href="https://www.cnblogs.com/schips/p/the_meaning_of_android_building_type.html">编译选择user、user-debug、eng的区别</a></li>
+</ol>
+<h4 id="13-磁盘准备">1.3 磁盘准备</h4>
+<p>MacOS会在一个保留大小写，但是不区分大小的文件系统中运行。git不支持。所以需要开辟一块磁盘空间，并重新设计其格式。</p>
+<p>在Mac Pro中，格式一块大小为 175GB的磁盘。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>hdiutil create -type SPARSE -fs <span style="color:#e6db74">&#39;Case-sensitive Journaled HFS+&#39;</span> -size 175g ~/Downloans/android10.dmg
+</span></span></code></pre></div><p>执行命令后：</p>
+<p><img src="https://pic.imgdb.cn/item/628ebf5e09475431296326e3.png" alt="image-20220525151140669"></p>
+<p>如果后期需要调整磁盘空间，可以使用：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>hdiutil resize -size &lt;new-size-you-want&gt;g ~/android.dmg.sparseimage
+</span></span></code></pre></div><p><strong>挂载磁盘：</strong> 可以将挂架命令封装为一个函数，放在shell中，便于后面使用</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># mount the android file image</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> mountAndroid <span style="color:#f92672">{</span> hdiutil attach ~/android.dmg -mountpoint /Volumes/android; <span style="color:#f92672">}</span>
+</span></span></code></pre></div><p><strong>挂载出错：</strong></p>
+<p><img src="https://pic.imgdb.cn/item/628ebf5e09475431296326d1.png" alt="image-20220525152021220"></p>
+<p>解决办法：</p>
+<p><a href="https://blog.csdn.net/fukai7722/article/details/119039539">macOS打开dmg安装包提示 “资源忙”的解决方案</a></p>
+<blockquote>
+<p>将disk相关的任务杀掉。</p>
+</blockquote>
+<h3 id="二源码下载">二、源码下载</h3>
+<h4 id="21-python27安装可选">2.1 Python2.7安装(可选)</h4>
+<p>[python2.7 安装包](链接: <a href="https://pan.baidu.com/s/1_rxHpvv10FTOm77pl83hxQ">https://pan.baidu.com/s/1_rxHpvv10FTOm77pl83hxQ</a> 提取码: ndl6
+&ndash;来自百度网盘超级会员v6的分享)</p>
+<h4 id="22-repo工具下载安装">2.2 repo工具下载安装</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>mkdir ~/bin
+</span></span><span style="display:flex;"><span>PATH<span style="color:#f92672">=</span>~/bin:$PATH
+</span></span><span style="display:flex;"><span>curl https://mirrors.tuna.tsinghua.edu.cn/git/git-repo -o ~/bin/repo
+</span></span><span style="display:flex;"><span>chmod +x repo
+</span></span></code></pre></div><p>由于repo指向的google的源码镜像，考虑到网速的问题，要将其换为国内镜像：</p>
+<p>方式一： 在 ~/.bash_profile中新增：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>export REPO_URL<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;https://mirrors.tuna.tsinghua.edu.cn/git/git-repo&#39;</span>
+</span></span></code></pre></div><p>执行 source ~/.bash_profile</p>
+<p>方式二：</p>
+<p>修改 repo文件： 将</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>REPO_URL <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;https://gerrit.googlesource.com/git-repo&#39;</span>
+</span></span></code></pre></div><p>改为：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>REPO_URL <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;https://mirrors.tuna.tsinghua.edu.cn/git/git-repo&#39;</span>
+</span></span></code></pre></div><h4 id="23-源码下载">2.3 源码下载</h4>
+<ol>
+<li>
+<p>打开termal，将目录切换到 <strong>挂载之后的自盘目录</strong>(/Volumes/android10/)</p>
+</li>
+<li>
+<p>创建源码存放的文件夹 WORKING_DIRECTORY,并进入该目录</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>mkdir WORKING_DIRECTORY
+</span></span><span style="display:flex;"><span>cd WORKING_DIRECTORY
+</span></span></code></pre></div></li>
+<li>
+<p>初始化aosp仓库（笔者要下载的是android-10.0.0_r1）</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>repo init -u https://mirrors.tuna.tsinghua.edu.cn/git/AOSP/platform/manifest -b android-10.0.0_r1  
+</span></span></code></pre></div></li>
+<li>
+<p>开始下载（开启4个线程去同步源码）</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>repo sync -j4
+</span></span></code></pre></div><p>同步阶段，有一个同步进度：</p>
+<p><img src="https://pic.imgdb.cn/item/628ebf5e09475431296326e0.png" alt="image-20220525173211144"></p>
+<p>同步代码，花去了2.5h</p>
+<p><img src="https://pic.imgdb.cn/item/628ebf5e094754312963270f.png" alt="image-20220525185746740"></p>
+<p>源码同步完成后，占用磁盘空间如下（大概101GB）：</p>
+<p><img src="https://pic.imgdb.cn/item/628ebf5e09475431296326e8.png" alt="image-20220525195230980"></p>
+</li>
+</ol>
+<h3 id="三源码编译">三、源码编译</h3>
+<h4 id="31-编译环境准备">3.1 编译环境准备</h4>
+<p><strong>1. 驱动下载：</strong></p>
+<p><img src="https://pic.imgdb.cn/item/628ebf5e0947543129632712.png" alt="image-20220525173608954"></p>
+<p>为什么选择这个驱动，可以参考<a href="https://blog.csdn.net/dirksmaller/article/details/112761115?spm=1001.2014.3001.5501">笔者另一篇文章</a></p>
+<p><strong>2. 安装xcode命令行工具</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>xcode-select --install
+</span></span></code></pre></div><p><strong>3.安装<a href="https://www.macports.org/install.php">MacPorts工具</a></strong></p>
+<p><img src="https://pic.imgdb.cn/item/628ebf5e09475431296327e0.png" alt="image-20220525194722412"></p>
+<p>并在.bash_profile中添加如下内容：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>export PATH<span style="color:#f92672">=</span>/opt/local/bin:$PATH
+</span></span></code></pre></div><p>source ~/.bash_profile</p>
+<p><strong>4.安装依赖库</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>POSIXLY_CORRECT<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> sudo port install gmake libsdl git gnupg
+</span></span></code></pre></div><p>如果是Mac OSX v10.4 还需要安装bison</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>POSIXLY_CORRECT<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> sudo port install bison
+</span></span></code></pre></div><h4 id="32-编译">3.2 编译</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>//1. 建立android-q开发分支：
+</span></span><span style="display:flex;"><span>repo start android_q --all
+</span></span><span style="display:flex;"><span>source build/envsetup.sh
+</span></span><span style="display:flex;"><span>lunch
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>// 接下来 等待30s，等待终端弹出 可编译的版本号，然后进行选择
+</span></span><span style="display:flex;"><span>// saifish****userdebug 对应的16
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">16</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>make -j8 // 8代表你想要开启的线程数，笔者电脑是4核8线程
+</span></span></code></pre></div><p>经过漫长的等待(大约3.5小时)，终于编译成功了：</p>
+<p><img src="https://pic.imgdb.cn/item/628ebf5e09475431296327d0.png" alt="image-20220526065034126"></p>
+<p>编译后，整个磁盘占用情况如下(165GB)：</p>
+<p><img src="https://pic.imgdb.cn/item/628ebf5e0947543129632801.png" alt="image-20220526065202930"></p>
+<h4 id="33-编译遇到的坑">3.3 编译遇到的坑</h4>
+<h5 id="331-xcode-sdk-版本选择">3.3.1 Xcode SDK 版本选择</h5>
+<p>由于笔者系统版本比较新(12.3) , 但是aosp需要的SDK版本，最高到10.14，之前的解决版本，就是在支持的版本上新增12.3 。 但是经过尝试，发现不断出错。因此 选择<strong>下载一个10.14的SDK， 并将系统支持的最低SDK版本改为10.14</strong>。</p>
+<ol>
+<li>
+<p>下载一个<a href="https://github.com/phracker/MacOSX-SDKs/releases">10.14SDK</a></p>
+</li>
+<li>
+<p>修改系统支持的最小SDK版本</p>
+<p>通过<strong>xcode</strong>修改 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/info.plist文件</p>
+<p>由于该文件目录和文件有<strong>权限限制</strong> ，需要先复制到当前用户有权限修改的目录下，然后修改，待完成修改后，复制回去：</p>
+<p>如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>cp /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/info.plist ~/Downloads
+</span></span></code></pre></div><p><img src="https://pic.imgdb.cn/item/628ebf5e0947543129632804.png" alt="image-20220526071438748"></p>
+<h5 id="332-failed-outtargetproductsailfishobjetctreble_sepolicy_tests_270_intermediatestreble_sepolicy_tests_270">3.3.2 FAILED: out/target/product/sailfish/obj/ETC/treble_sepolicy_tests_27.0_intermediates/treble_sepolicy_tests_27.0</h5>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>vim system/sepolicy/tests/Android.bp
+</span></span></code></pre></div><p>将stl: &ldquo;libc++_static&rdquo; 注释掉</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>static_libs: <span style="color:#f92672">[</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#e6db74">&#34;libbase&#34;</span>,
+</span></span><span style="display:flex;"><span>       <span style="color:#e6db74">&#34;libsepol&#34;</span>,
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">]</span>,
+</span></span><span style="display:flex;"><span>   // stl: <span style="color:#e6db74">&#34;libc++_static&#34;</span>,
+</span></span><span style="display:flex;"><span>   sanitize: <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>       never: true,
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">}</span>,
+</span></span></code></pre></div></li>
+</ol>
+<h3 id="四刷机">四、刷机</h3>
+<p><a href="https://source.android.google.cn/setup/build/running?hl=zh-cn">刷写设备的官方文档</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>ANDROID_PRODUCT_OUT<span style="color:#f92672">=</span>/Volumes/android10/WORKING_DIRECTORY/out/target/product/sailfish
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#解锁</span>
+</span></span><span style="display:flex;"><span>fastboot flashing unlock    <span style="color:#75715e">#对于新款设备（2015 年及之后发布的设备）</span>
+</span></span><span style="display:flex;"><span>fastboot oem unlock         <span style="color:#75715e">#对于老款设备（2014 年及之前发布的设备）</span>
+</span></span><span style="display:flex;"><span>fastboot flashing unlock_critical     <span style="color:#75715e">#这条命令只有我这个奇葩机型需要，不过别的机型可能需要别的，哈哈哈</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#注：很多设备可能只需第一条命令fastboot flashing unlock即可</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>adb reboot bootloader     <span style="color:#75715e">#进入fastboot模式（或长按Volume Down + Power键）</span>
+</span></span><span style="display:flex;"><span>fastboot flashall -w      <span style="color:#75715e">#刷机</span>
+</span></span></code></pre></div><h3 id="五参考链接">五、参考链接</h3>
+<ol>
+<li><a href="https://blog.csdn.net/w__y__q/article/details/121570143">mac下编译android源码避坑指南（新）</a></li>
+<li><a href="http://t.zoukankan.com/lanjiabin-p-12807342.html">MacBook下载和编译Android AOSP源码</a></li>
+<li><a href="https://www.csdn.net/tags/MtTagg4sODk1My1ibG9n.html"><em>Mac</em> <strong>OS10.12</strong> <em>编译Android源码</em><strong>8.1</strong></a></li>
+<li><a href="https://www.jianshu.com/p/37f5f826b642">macOS Big Sur 编译Android11.0源码过程总结</a></li>
+<li><a href="https://source.android.google.cn/source/initializing?hl=zh-cn#creating-a-case-sensitive-disk-image">Android官网 编译AOSP</a></li>
+<li><a href="https://www.jianshu.com/p/37f5f826b642">macOS Big Sur 编译Android11.0源码过程总结</a></li>
+</ol>
+</div>
+    </article>
+  </main>
+
+    </div>
+    <footer>
+  <hr />
+  
+    <p id="social">
+      Find me around the web:
+      <br />
+      
+        
+        <a href="https://github.com/z69yuan">GitHub</a>
+      
+         | 
+        <a href="https://twitter.com/Z69yuan">Twitter</a>
+      
+         | 
+        <a href="https://gitee.com/dashboard">Gitee</a>
+      
+         | 
+        <a href="https://space.bilibili.com/429812645">Bilibili</a>
+      
+    </p>
+  
+  <p class="copyright">
+    Copyright © 2022
+    <a href="https://z69yuan.github.io/"><strong>Blog Author</strong></a>.
+    This work is licensed under the
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> license.
+  </p>
+  <p class="builtWith">
+    Built with
+    <a href="http://www.gohugo.io/">Hugo</a>,
+    using the theme
+    <a href="https://gitlab.com/ian-s-mcb/smigle-hugo-theme">smigle</a>,
+    which was influenced by the theme
+    <a href="https://github.com/sumnerevans/smol">smol</a>.
+  </p>
+</footer>
+
+  </body>
+</html>

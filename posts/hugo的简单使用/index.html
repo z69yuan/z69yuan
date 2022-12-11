@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content=""
+  />
+  
+    
+      <title>Hugo的简单使用 | 69yuan</title>
+    
+  
+  <link rel="stylesheet" href="/css/reset.css"/>
+  <link rel="stylesheet" href="/css/font.css"/>
+  <link rel="stylesheet" href="/css/smigle.css"/>
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+</head>
+
+  <body>
+    <header>
+  <div id="brand">
+    <a class="icon-link" href="https://z69yuan.github.io/">
+      <img
+        class="icon"
+        src="/images/brandIcon.svg"
+      />
+    </a>
+    <div class="text">
+      <a href="https://z69yuan.github.io/"><h1>69yuan</h1></a>
+      <h3>An Android Developer , Go Go Go !!!</h3>
+    </div>
+  </div>
+  <nav>
+    
+      
+        
+        <a href="/"><b>Home</b></a>
+      
+         | 
+        <a href="/posts"><b>All posts</b></a>
+      
+         | 
+        <a href="/categories"><b>Categories</b></a>
+      
+         | 
+        <a href="/tags"><b>Tags</b></a>
+      
+         | 
+        <a href="/about"><b>About</b></a>
+      
+    
+  </nav>
+  <hr />
+</header>
+
+    <div id="content">
+      
+  <main>
+    <article>
+      <h1>Hugo的简单使用</h1>
+      <div class="post-meta">
+  <strong>
+    <span>Posted on</span>
+    <time>2022-05-18 13:22:31</time>
+    <span>in</span>
+    
+      <a href="/categories/%E5%B7%A5%E5%85%B7">工具</a>
+  </strong>
+  <span> • 64 words</span>
+  <span> • 1 minute read</span>
+  
+  
+    <div>
+      <span>Tags:</span>
+      
+        <a href="/tags/hugo%E4%BD%BF%E7%94%A8">Hugo使用</a>
+    </div>
+  
+</div>
+
+      <div><h3 id="一常用命令">一、常用命令</h3>
+<blockquote>
+<p>注意：本文当中的命令，都是在  hugo生成的site文件目录，进行执行的。</p>
+</blockquote>
+<ol>
+<li>
+<p>创建一个文档</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>hugo new post/xxxx.md  //执行该命令，会在 <span style="color:#e6db74">${</span>site_path<span style="color:#e6db74">}</span>/content/post下生成对应的markdown文件
+</span></span><span style="display:flex;"><span>hugo new post/tools/xxxx.md  //执行该命令，会在 <span style="color:#e6db74">${</span>site_path<span style="color:#e6db74">}</span>/content/post/tools/下生成对应的markdown文件
+</span></span></code></pre></div><p>并且生成的markdown文件中，默认有如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">title</span>: <span style="color:#e6db74">&#34;Hugo的简单使用&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">date</span>: <span style="color:#e6db74">2022-05-18T13:22:31</span><span style="color:#ae81ff">+08</span>:<span style="color:#ae81ff">00</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">draft</span>: <span style="color:#66d9ef">true</span> 
+</span></span></code></pre></div><p>当然，我们可以增加其他的描述信息，如：标签、分类、主题等信息</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">tags</span>: [<span style="color:#e6db74">&#34;hugo&#34;</span>]
+</span></span><span style="display:flex;"><span><span style="color:#f92672">series</span>: [<span style="color:#e6db74">&#34;Blog养成记&#34;</span>]
+</span></span><span style="display:flex;"><span><span style="color:#f92672">categories</span>: [<span style="color:#e6db74">&#34;杂技浅尝&#34;</span>]
+</span></span></code></pre></div></li>
+<li>
+<p>开启Hugo服务，进行本地调试</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>hugo server -D  <span style="color:#f92672">[</span>-p &lt;port_number&gt;<span style="color:#f92672">]</span> 
+</span></span></code></pre></div></li>
+<li>
+<p>部署Hugo服务</p>
+<p>3.1  在&quot;${site_path}/pubic&quot;下生成要部署的静态网页</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>hugo server -D <span style="color:#75715e"># 或者简写  `hugo -D`</span>
+</span></span></code></pre></div><p>3.2  将public目录下生成的文件，发布到 个人博客（如gitee pages服务）即可。</p>
+</li>
+</ol>
+<h3 id="二-本站搭建选项">二、 本站搭建选项</h3>
+<p>整体采用了 Gitee(码云) + Hugo 的形式创建。其中：</p>
+<p>Hugo采用的主题则是：<a href="https://github.com/olOwOlo/hugo-theme-even/blob/master/README-zh.md">hugo-theme-even</a></p>
+<p>可以根据 帮助文档，修改 主题颜色等配置信息。</p>
+<h3 id="三参考链接">三、参考链接</h3>
+<ol>
+<li><a href="https://orianna-zzo.github.io/series/blog%E5%85%BB%E6%88%90%E8%AE%B0/">Blog养成记</a></li>
+<li><a href="https://yiweiniu.github.io/blog/2018/02/Hugo-%E5%BB%BA%E7%AB%99%E8%AE%B0%E5%BD%95/">Hugo建站记录</a></li>
+<li><a href="https://hugocn.netlify.app/configuration.html">Hugo中文文档</a></li>
+<li><a href="https://jamstackthemes.dev/theme/#ssg=hugo">Hugo主题来源一</a></li>
+</ol>
+</div>
+    </article>
+  </main>
+
+    </div>
+    <footer>
+  <hr />
+  
+    <p id="social">
+      Find me around the web:
+      <br />
+      
+        
+        <a href="https://github.com/z69yuan">GitHub</a>
+      
+         | 
+        <a href="https://twitter.com/Z69yuan">Twitter</a>
+      
+         | 
+        <a href="https://gitee.com/dashboard">Gitee</a>
+      
+         | 
+        <a href="https://space.bilibili.com/429812645">Bilibili</a>
+      
+    </p>
+  
+  <p class="copyright">
+    Copyright © 2022
+    <a href="https://z69yuan.github.io/"><strong>Blog Author</strong></a>.
+    This work is licensed under the
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> license.
+  </p>
+  <p class="builtWith">
+    Built with
+    <a href="http://www.gohugo.io/">Hugo</a>,
+    using the theme
+    <a href="https://gitlab.com/ian-s-mcb/smigle-hugo-theme">smigle</a>,
+    which was influenced by the theme
+    <a href="https://github.com/sumnerevans/smol">smol</a>.
+  </p>
+</footer>
+
+  </body>
+</html>

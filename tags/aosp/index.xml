@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>AOSP on 69yuan</title>
+    <link>https://z69yuan.github.io/tags/aosp/</link>
+    <description>Recent content in AOSP on 69yuan</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© 69yuan</copyright>
+    <lastBuildDate>Thu, 26 May 2022 07:36:38 +0800</lastBuildDate><atom:link href="https://z69yuan.github.io/tags/aosp/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>MacOs编译AndroidQ</title>
+      <link>https://z69yuan.github.io/posts/frameworks/01_macos%E7%BC%96%E8%AF%91android10/</link>
+      <pubDate>Thu, 26 May 2022 07:36:38 +0800</pubDate>
+      
+      <guid>https://z69yuan.github.io/posts/frameworks/01_macos%E7%BC%96%E8%AF%91android10/</guid>
+      <description>一、准备工作 1.1 系统介绍 Mac系统版本： 12.3.1
+内存： 16GB
+**CPU: ** 4核i5 2GHz
+磁盘：180GB
+笔者曾在 Ubuntu中编译该版本，最后占用磁盘空间为154GB。具体请查看 Ubuntu16.04编译Android10源码并刷机Pixel
+1.2 AOSP版本选择 编译选择user、user-debug、eng的区别 1.3 磁盘准备 MacOS会在一个保留大小写，但是不区分大小的文件系统中运行。git不支持。所以需要开辟一块磁盘空间，并重新设计其格式。
+在Mac Pro中，格式一块大小为 175GB的磁盘。
+hdiutil create -type SPARSE -fs &amp;#39;Case-sensitive Journaled HFS+&amp;#39; -size 175g ~/Downloans/android10.dmg 执行命令后：
+如果后期需要调整磁盘空间，可以使用：
+hdiutil resize -size &amp;lt;new-size-you-want&amp;gt;g ~/android.dmg.sparseimage 挂载磁盘： 可以将挂架命令封装为一个函数，放在shell中，便于后面使用
+# mount the android file image function mountAndroid { hdiutil attach ~/android.dmg -mountpoint /Volumes/android; } 挂载出错：
+解决办法：
+macOS打开dmg安装包提示 “资源忙”的解决方案
+将disk相关的任务杀掉。
+二、源码下载 2.1 Python2.7安装(可选) [python2.7 安装包](链接: https://pan.baidu.com/s/1_rxHpvv10FTOm77pl83hxQ 提取码: ndl6 &amp;ndash;来自百度网盘超级会员v6的分享)</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content=""
+  />
+  
+    
+      <title>烧录AOSP镜像到手机 | 69yuan</title>
+    
+  
+  <link rel="stylesheet" href="/css/reset.css"/>
+  <link rel="stylesheet" href="/css/font.css"/>
+  <link rel="stylesheet" href="/css/smigle.css"/>
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+</head>
+
+  <body>
+    <header>
+  <div id="brand">
+    <a class="icon-link" href="https://z69yuan.github.io/">
+      <img
+        class="icon"
+        src="/images/brandIcon.svg"
+      />
+    </a>
+    <div class="text">
+      <a href="https://z69yuan.github.io/"><h1>69yuan</h1></a>
+      <h3>An Android Developer , Go Go Go !!!</h3>
+    </div>
+  </div>
+  <nav>
+    
+      
+        
+        <a href="/"><b>Home</b></a>
+      
+         | 
+        <a href="/posts"><b>All posts</b></a>
+      
+         | 
+        <a href="/categories"><b>Categories</b></a>
+      
+         | 
+        <a href="/tags"><b>Tags</b></a>
+      
+         | 
+        <a href="/about"><b>About</b></a>
+      
+    
+  </nav>
+  <hr />
+</header>
+
+    <div id="content">
+      
+  <main>
+    <article>
+      <h1>烧录AOSP镜像到手机</h1>
+      <div class="post-meta">
+  <strong>
+    <span>Posted on</span>
+    <time>2022-05-26 12:28:39</time>
+    <span>in</span>
+    
+      <a href="/categories/framework">Framework</a>, 
+      <a href="/categories/rom">ROM</a>
+  </strong>
+  <span> • 47 words</span>
+  <span> • 1 minute read</span>
+  
+  
+    <div>
+      <span>Tags:</span>
+      
+        <a href="/tags/framework">Framework</a>, 
+        <a href="/tags/rom">ROM</a>
+    </div>
+  
+</div>
+
+      <div><h3 id="一-准备工作">一、 准备工作</h3>
+<ol>
+<li>
+<p>进入BL(BootLoader)页面</p>
+<p>首先需要能够使用adb 对设备进行操作，然后执行如下命令，进入FL中</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>adb reboot bootloader
+</span></span></code></pre></div></li>
+<li>
+<p>确保OEM 处于Unlocked状态</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>fastboot flashing unlock <span style="color:#f92672">(</span>不同设备OEM解锁，我在欧洲版Pixel 3a，bootloader是可以解锁的，至于其他设备的可以查看谷歌烧录教程<span style="color:#f92672">)</span>
+</span></span></code></pre></div></li>
+</ol>
+<h3 id="二-利用官方包刷机">二、 利用官方包刷机</h3>
+<ol>
+<li>
+<p>去<a href="https://developers.google.cn/android/images#shamu">官网</a>找对应机型的镜像文件。</p>
+<blockquote>
+<p>这是Pixel的镜像文件  链接: <a href="https://pan.baidu.com/s/1uaxFXm8seXJaVs6Un5P6UQ">https://pan.baidu.com/s/1uaxFXm8seXJaVs6Un5P6UQ</a> 提取码: kldf
+&ndash;来自百度网盘超级会员v6的分享</p>
+</blockquote>
+</li>
+<li>
+<p>待下载完成后，解压对应的压缩包，得到：</p>
+<p><img src="https://pic.imgdb.cn/item/628f0c8b0947543129c05138.png" alt="image-20220526121407403"></p>
+<p>并执行 flash-all.sh 脚本</p>
+</li>
+</ol>
+<h3 id="三利用自己编译的镜像刷机">三、利用自己编译的镜像刷机</h3>
+<ol>
+<li>
+<p>可选执行命令</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>source ./build/envsetup.sh<span style="color:#f92672">(</span>如果执行了，可以不用执行<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>lunch aosp_sargo-userdebug<span style="color:#f92672">(</span>如果执行了，可以不用执行）
+</span></span></code></pre></div></li>
+<li>
+<p>设置ANDROID_PRODUCT_OUT路径</p>
+</li>
+<li>
+<p>执行刷机命令</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>fastboot flashall -w
+</span></span></code></pre></div><p>-w 表示 格式化数据</p>
+</li>
+</ol>
+<h4 id="四参考链接">四、参考链接</h4>
+<ol>
+<li><a href="https://source.android.com/setup/build/running">官网刷机教程</a></li>
+<li><a href="https://www.codeleading.com/article/34673532546/#_134">android 源码下载、编译与烧录到Pixel 3a</a></li>
+</ol>
+</div>
+    </article>
+  </main>
+
+    </div>
+    <footer>
+  <hr />
+  
+    <p id="social">
+      Find me around the web:
+      <br />
+      
+        
+        <a href="https://github.com/z69yuan">GitHub</a>
+      
+         | 
+        <a href="https://twitter.com/Z69yuan">Twitter</a>
+      
+         | 
+        <a href="https://gitee.com/dashboard">Gitee</a>
+      
+         | 
+        <a href="https://space.bilibili.com/429812645">Bilibili</a>
+      
+    </p>
+  
+  <p class="copyright">
+    Copyright © 2022
+    <a href="https://z69yuan.github.io/"><strong>Blog Author</strong></a>.
+    This work is licensed under the
+    <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> license.
+  </p>
+  <p class="builtWith">
+    Built with
+    <a href="http://www.gohugo.io/">Hugo</a>,
+    using the theme
+    <a href="https://gitlab.com/ian-s-mcb/smigle-hugo-theme">smigle</a>,
+    which was influenced by the theme
+    <a href="https://github.com/sumnerevans/smol">smol</a>.
+  </p>
+</footer>
+
+  </body>
+</html>

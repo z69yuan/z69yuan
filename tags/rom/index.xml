@@ -1,22 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Framework on 69yuan</title>
-    <link>https://z69yuan.github.io/tags/framework/</link>
-    <description>Recent content in Framework on 69yuan</description>
+    <title>ROM on 69yuan</title>
+    <link>https://z69yuan.github.io/tags/rom/</link>
+    <description>Recent content in ROM on 69yuan</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© 69yuan</copyright>
-    <lastBuildDate>Sun, 11 Dec 2022 06:48:03 +0800</lastBuildDate><atom:link href="https://z69yuan.github.io/tags/framework/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Handler</title>
-      <link>https://z69yuan.github.io/posts/frameworks/03_handle/</link>
-      <pubDate>Sun, 11 Dec 2022 06:48:03 +0800</pubDate>
-      
-      <guid>https://z69yuan.github.io/posts/frameworks/03_handle/</guid>
-      <description>一、几个问题 Handle的作用是什么？ Handle大体处理流程是怎样的？ 消息是怎么获得的？ 消息类型有几种，各自是怎样的? Handle底层是怎么实现的？发送消息时， 目标线程是怎么知道的 Idle Handle 是怎么应用的 </description>
-    </item>
-    
+    <lastBuildDate>Thu, 26 May 2022 12:28:39 +0800</lastBuildDate><atom:link href="https://z69yuan.github.io/tags/rom/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>烧录AOSP镜像到手机</title>
       <link>https://z69yuan.github.io/posts/frameworks/02_%E7%83%A7%E5%BD%95aosp%E9%95%9C%E5%83%8F%E5%88%B0%E6%89%8B%E6%9C%BA/</link>
