@@ -7,7 +7,16 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© 69yuan</copyright>
-    <lastBuildDate>Sat, 10 Dec 2022 19:19:23 +0800</lastBuildDate><atom:link href="https://z69yuan.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 11 Dec 2022 06:48:03 +0800</lastBuildDate><atom:link href="https://z69yuan.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Handler</title>
+      <link>https://z69yuan.github.io/posts/handle/</link>
+      <pubDate>Sun, 11 Dec 2022 06:48:03 +0800</pubDate>
+      
+      <guid>https://z69yuan.github.io/posts/handle/</guid>
+      <description>一、几个问题 Handle的作用是什么？ Handle大体处理流程是怎样的？ 消息是怎么获得的？ 消息类型有几种，各自是怎样的? Handle底层是怎么实现的？发送消息时， 目标线程是怎么知道的 Idle Handle 是怎么应用的 </description>
+    </item>
+    
     <item>
       <title>Hugo备忘录</title>
       <link>https://z69yuan.github.io/posts/hugo/</link>
